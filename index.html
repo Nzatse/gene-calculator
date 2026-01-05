@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Function Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" data-tab="scientific">🔬 Scientific</button>
+            <button class="tab-btn" data-tab="financial">💰 Financial</button>
+            <button class="tab-btn" data-tab="graphing">📊 Graphing</button>
+            <button class="tab-btn" data-tab="programmable">⚙️ Programmable</button>
+            <button class="tab-btn" data-tab="printing">🖨️ Printing</button>
+        </div>
+
+        <!-- Scientific Calculator Tab -->
+        <div class="tab-content active" id="scientific-tab">
+            <div class="calculator-wrapper">
+                <div class="calculator">
+                <div class="display">
+                    <div class="history-display" id="historyDisplay"></div>
+                    <input type="text" id="display" readonly value="0">
+                </div>
+                
+                <div class="buttons">
+                    <!-- Row 1: Functions -->
+                    <button class="btn function" data-value="sin(">sin</button>
+                    <button class="btn function" data-value="cos(">cos</button>
+                    <button class="btn function" data-value="tan(">tan</button>
+                    <button class="btn function" data-value="log(">log</button>
+                    <button class="btn function" data-value="ln(">ln</button>
+                    
+                    <!-- Row 2: Functions -->
+                    <button class="btn function" data-value="sqrt(">√</button>
+                    <button class="btn function" data-value="^">x^y</button>
+                    <button class="btn function" data-value="^2">x²</button>
+                    <button class="btn function" data-value="abs(">|x|</button>
+                    <button class="btn function" data-value="!">x!</button>
+                    
+                    <!-- Row 3: Functions & Clear -->
+                    <button class="btn function" data-value="(">(</button>
+                    <button class="btn function" data-value=")">)</button>
+                    <button class="btn function" data-value="%">%</button>
+                    <button class="btn clear" id="clearBtn">C</button>
+                    <button class="btn clear" id="backspaceBtn">⌫</button>
+                    
+                    <!-- Row 4: Numbers -->
+                    <button class="btn number" data-value="7">7</button>
+                    <button class="btn number" data-value="8">8</button>
+                    <button class="btn number" data-value="9">9</button>
+                    <button class="btn operator" data-value="/">÷</button>
+                    <button class="btn function" data-value="e">e</button>
+                    
+                    <!-- Row 5: Numbers -->
+                    <button class="btn number" data-value="4">4</button>
+                    <button class="btn number" data-value="5">5</button>
+                    <button class="btn number" data-value="6">6</button>
+                    <button class="btn operator" data-value="*">×</button>
+                    <button class="btn function" data-value="pi">π</button>
+                    
+                    <!-- Row 6: Numbers -->
+                    <button class="btn number" data-value="1">1</button>
+                    <button class="btn number" data-value="2">2</button>
+                    <button class="btn number" data-value="3">3</button>
+                    <button class="btn operator" data-value="-">−</button>
+                    <button class="btn function" id="historyBtn">📜</button>
+                    
+                    <!-- Row 7: Numbers -->
+                    <button class="btn number" data-value="0">0</button>
+                    <button class="btn number" data-value=".">.</button>
+                    <button class="btn equals" id="equalsBtn">=</button>
+                    <button class="btn operator" data-value="+">+</button>
+                    <button class="btn function" id="ansBtn">ANS</button>
+                </div>
+            </div>
+
+            <div class="history-panel" id="historyPanel">
+                <div class="history-header">
+                    <h2>History</h2>
+                    <button class="btn clear small" id="clearHistoryBtn">Clear All</button>
+                </div>
+                <div class="history-list" id="historyList">
+                    <p class="empty-history">No calculations yet</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Financial Calculator Tab -->
+        <div class="tab-content" id="financial-tab">
+            <div class="calculator-wrapper single">
+                <div class="calculator financial-calc">
+                    <h2 class="calc-title">Financial Calculator</h2>
+                    
+                    <div class="financial-tabs">
+                        <button class="mini-tab active" data-calc="loan">Loan</button>
+                        <button class="mini-tab" data-calc="mortgage">Mortgage</button>
+                        <button class="mini-tab" data-calc="investment">Investment</button>
+                        <button class="mini-tab" data-calc="savings">Savings</button>
+                    </div>
+
+                    <!-- Loan Calculator -->
+                    <div class="financial-panel active" id="loan-panel">
+                        <div class="form-group">
+                            <label>Loan Amount ($)</label>
+                            <input type="number" id="loanAmount" placeholder="10000">
+                        </div>
+                        <div class="form-group">
+                            <label>Interest Rate (%)</label>
+                            <input type="number" id="loanRate" placeholder="5.5" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Loan Term (years)</label>
+                            <input type="number" id="loanTerm" placeholder="5">
+                        </div>
+                        <button class="btn calculate-btn" onclick="calculateLoan()">Calculate</button>
+                        <div class="result-box" id="loanResult"></div>
+                    </div>
+
+                    <!-- Mortgage Calculator -->
+                    <div class="financial-panel" id="mortgage-panel">
+                        <div class="form-group">
+                            <label>Home Price ($)</label>
+                            <input type="number" id="homePrice" placeholder="300000">
+                        </div>
+                        <div class="form-group">
+                            <label>Down Payment ($)</label>
+                            <input type="number" id="downPayment" placeholder="60000">
+                        </div>
+                        <div class="form-group">
+                            <label>Interest Rate (%)</label>
+                            <input type="number" id="mortgageRate" placeholder="3.5" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Loan Term (years)</label>
+                            <input type="number" id="mortgageTerm" placeholder="30">
+                        </div>
+                        <button class="btn calculate-btn" onclick="calculateMortgage()">Calculate</button>
+                        <div class="result-box" id="mortgageResult"></div>
+                    </div>
+
+                    <!-- Investment Calculator -->
+                    <div class="financial-panel" id="investment-panel">
+                        <div class="form-group">
+                            <label>Initial Investment ($)</label>
+                            <input type="number" id="initialInvestment" placeholder="5000">
+                        </div>
+                        <div class="form-group">
+                            <label>Monthly Contribution ($)</label>
+                            <input type="number" id="monthlyContribution" placeholder="200">
+                        </div>
+                        <div class="form-group">
+                            <label>Annual Return (%)</label>
+                            <input type="number" id="returnRate" placeholder="7" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Investment Period (years)</label>
+                            <input type="number" id="investmentYears" placeholder="10">
+                        </div>
+                        <button class="btn calculate-btn" onclick="calculateInvestment()">Calculate</button>
+                        <div class="result-box" id="investmentResult"></div>
+                    </div>
+
+                    <!-- Savings Calculator -->
+                    <div class="financial-panel" id="savings-panel">
+                        <div class="form-group">
+                            <label>Initial Deposit ($)</label>
+                            <input type="number" id="initialDeposit" placeholder="1000">
+                        </div>
+                        <div class="form-group">
+                            <label>Monthly Deposit ($)</label>
+                            <input type="number" id="monthlyDeposit" placeholder="100">
+                        </div>
+                        <div class="form-group">
+                            <label>Interest Rate (%)</label>
+                            <input type="number" id="savingsRate" placeholder="2.5" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Time Period (years)</label>
+                            <input type="number" id="savingsYears" placeholder="5">
+                        </div>
+                        <button class="btn calculate-btn" onclick="calculateSavings()">Calculate</button>
+                        <div class="result-box" id="savingsResult"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graphing Calculator Tab -->
+        <div class="tab-content" id="graphing-tab">
+            <div class="calculator-wrapper single">
+                <div class="calculator graphing-calc">
+                    <h2 class="calc-title">Graphing Calculator</h2>
+                    
+                    <div class="form-group">
+                        <label>Function (use 'x' as variable)</label>
+                        <input type="text" id="graphFunction" placeholder="e.g., x^2, sin(x), 2*x+1">
+                    </div>
+                    
+                    <div class="graph-controls">
+                        <div class="form-group inline">
+                            <label>X Min:</label>
+                            <input type="number" id="xMin" value="-10" step="1">
+                        </div>
+                        <div class="form-group inline">
+                            <label>X Max:</label>
+                            <input type="number" id="xMax" value="10" step="1">
+                        </div>
+                        <div class="form-group inline">
+                            <label>Y Min:</label>
+                            <input type="number" id="yMin" value="-10" step="1">
+                        </div>
+                        <div class="form-group inline">
+                            <label>Y Max:</label>
+                            <input type="number" id="yMax" value="10" step="1">
+                        </div>
+                    </div>
+                    
+                    <button class="btn calculate-btn" onclick="plotGraph()">Plot Graph</button>
+                    <button class="btn clear" onclick="clearGraph()">Clear</button>
+                    
+                    <div class="graph-container">
+                        <canvas id="graphCanvas" width="600" height="400"></canvas>
+                    </div>
+                    
+                    <div class="graph-info">
+                        <p>Examples: x^2, sin(x), cos(x), tan(x), sqrt(x), abs(x), log(x), exp(x)</p>
+                        <p>Operations: +, -, *, /, ^</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Programmable Calculator Tab -->
+        <div class="tab-content" id="programmable-tab">
+            <div class="calculator-wrapper split">
+                <div class="calculator programmable-calc">
+                    <h2 class="calc-title">Programmable Calculator</h2>
+                    
+                    <div class="form-group">
+                        <label>Formula Name</label>
+                        <input type="text" id="formulaName" placeholder="e.g., Circle Area">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Variables (comma-separated)</label>
+                        <input type="text" id="formulaVars" placeholder="e.g., r">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Formula</label>
+                        <textarea id="formulaExpression" placeholder="e.g., pi * r^2" rows="3"></textarea>
+                    </div>
+                    
+                    <button class="btn equals" onclick="saveFormula()">Save Formula</button>
+                    
+                    <div class="formula-executor">
+                        <h3>Execute Formula</h3>
+                        <div id="formulaInputs"></div>
+                        <button class="btn calculate-btn" onclick="executeFormula()" style="display:none" id="executeBtn">Calculate</button>
+                        <div class="result-box" id="programResult"></div>
+                    </div>
+                </div>
+                
+                <div class="formulas-panel">
+                    <div class="history-header">
+                        <h2>Saved Formulas</h2>
+                        <button class="btn clear small" onclick="clearFormulas()">Clear All</button>
+                    </div>
+                    <div class="formulas-list" id="formulasList">
+                        <p class="empty-history">No formulas saved yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Printing Calculator Tab -->
+        <div class="tab-content" id="printing-tab">
+            <div class="calculator-wrapper split">
+                <div class="calculator">
+                    <h2 class="calc-title">Printing Calculator</h2>
+                    
+                    <div class="display">
+                        <input type="text" id="printDisplay" readonly value="0">
+                    </div>
+                    
+                    <div class="buttons print-buttons">
+                        <button class="btn number" onclick="printInput('7')">7</button>
+                        <button class="btn number" onclick="printInput('8')">8</button>
+                        <button class="btn number" onclick="printInput('9')">9</button>
+                        <button class="btn operator" onclick="printOperator('/')">÷</button>
+                        
+                        <button class="btn number" onclick="printInput('4')">4</button>
+                        <button class="btn number" onclick="printInput('5')">5</button>
+                        <button class="btn number" onclick="printInput('6')">6</button>
+                        <button class="btn operator" onclick="printOperator('*')">×</button>
+                        
+                        <button class="btn number" onclick="printInput('1')">1</button>
+                        <button class="btn number" onclick="printInput('2')">2</button>
+                        <button class="btn number" onclick="printInput('3')">3</button>
+                        <button class="btn operator" onclick="printOperator('-')">−</button>
+                        
+                        <button class="btn number" onclick="printInput('0')">0</button>
+                        <button class="btn number" onclick="printInput('.')">.</button>
+                        <button class="btn equals" onclick="printCalculate()">=</button>
+                        <button class="btn operator" onclick="printOperator('+')">+</button>
+                        
+                        <button class="btn clear" onclick="printClear()">C</button>
+                        <button class="btn clear" onclick="printClearTape()">Clear Tape</button>
+                        <button class="btn function" onclick="exportTape()">📄 Export PDF</button>
+                    </div>
+                </div>
+                
+                <div class="tape-panel">
+                    <div class="history-header">
+                        <h2>Calculation Tape</h2>
+                        <div class="tape-total" id="tapeTotal">Total: $0.00</div>
+                    </div>
+                    <div class="tape-list" id="tapeList">
+                        <p class="empty-history">No calculations yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="calculator.js"></script>
+</body>
+</html>
