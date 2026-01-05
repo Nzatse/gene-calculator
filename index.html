@@ -15,6 +15,16 @@
             <button class="tab-btn" data-tab="graphing">📊 Graphing</button>
             <button class="tab-btn" data-tab="programmable">⚙️ Programmable</button>
             <button class="tab-btn" data-tab="printing">🖨️ Printing</button>
+            <button class="tab-btn" data-tab="converter">🔄 Converter</button>
+            <button class="tab-btn" data-tab="statistics">📈 Statistics</button>
+            <button class="tab-btn" data-tab="base">💻 Base</button>
+            <button class="tab-btn" data-tab="matrix">🔢 Matrix</button>
+            <button class="tab-btn" data-tab="datetime">📅 Date/Time</button>
+            <button class="tab-btn" data-tab="geometry">📐 Geometry</button>
+            <button class="tab-btn" data-tab="health">💪 Health</button>
+            <button class="tab-btn" data-tab="taxtip">💵 Tax & Tip</button>
+            <button class="tab-btn" data-tab="scinotation">🔬 Sci Notation</button>
+            <button class="tab-btn" data-tab="complex">🌀 Complex</button>
         </div>
 
         <!-- Scientific Calculator Tab -->
@@ -323,6 +333,616 @@
                     <div class="tape-list" id="tapeList">
                         <p class="empty-history">No calculations yet</p>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unit Converter Tab -->
+        <div class="tab-content" id="converter-tab">
+            <div class="calculator-wrapper single">
+                <div class="calculator">
+                    <h2 class="calc-title">Unit Converter</h2>
+                    
+                    <div class="financial-tabs">
+                        <button class="mini-tab active" data-calc="currency">Currency</button>
+                        <button class="mini-tab" data-calc="length">Length</button>
+                        <button class="mini-tab" data-calc="weight">Weight</button>
+                        <button class="mini-tab" data-calc="temperature">Temperature</button>
+                        <button class="mini-tab" data-calc="volume">Volume</button>
+                    </div>
+
+                    <!-- Currency Converter -->
+                    <div class="financial-panel active" id="currency-panel">
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="number" id="currencyAmount" value="1" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>From</label>
+                            <select id="currencyFrom">
+                                <option value="USD" selected>USD - US Dollar</option>
+                                <option value="EUR">EUR - Euro</option>
+                                <option value="GBP">GBP - British Pound</option>
+                                <option value="JPY">JPY - Japanese Yen</option>
+                                <option value="CNY">CNY - Chinese Yuan</option>
+                                <option value="CAD">CAD - Canadian Dollar</option>
+                                <option value="AUD">AUD - Australian Dollar</option>
+                                <option value="CHF">CHF - Swiss Franc</option>
+                                <option value="INR">INR - Indian Rupee</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>To</label>
+                            <select id="currencyTo">
+                                <option value="USD">USD - US Dollar</option>
+                                <option value="EUR" selected>EUR - Euro</option>
+                                <option value="GBP">GBP - British Pound</option>
+                                <option value="JPY">JPY - Japanese Yen</option>
+                                <option value="CNY">CNY - Chinese Yuan</option>
+                                <option value="CAD">CAD - Canadian Dollar</option>
+                                <option value="AUD">AUD - Australian Dollar</option>
+                                <option value="CHF">CHF - Swiss Franc</option>
+                                <option value="INR">INR - Indian Rupee</option>
+                            </select>
+                        </div>
+                        <button class="btn calculate-btn" onclick="convertCurrency()">Convert</button>
+                        <div class="result-box" id="currencyResult"></div>
+                    </div>
+
+                    <!-- Length Converter -->
+                    <div class="financial-panel" id="length-panel">
+                        <div class="form-group">
+                            <label>Value</label>
+                            <input type="number" id="lengthValue" value="1" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>From</label>
+                            <select id="lengthFrom">
+                                <option value="m" selected>Meters</option>
+                                <option value="km">Kilometers</option>
+                                <option value="cm">Centimeters</option>
+                                <option value="mm">Millimeters</option>
+                                <option value="mi">Miles</option>
+                                <option value="yd">Yards</option>
+                                <option value="ft">Feet</option>
+                                <option value="in">Inches</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>To</label>
+                            <select id="lengthTo">
+                                <option value="m">Meters</option>
+                                <option value="km">Kilometers</option>
+                                <option value="cm">Centimeters</option>
+                                <option value="mm">Millimeters</option>
+                                <option value="mi">Miles</option>
+                                <option value="yd">Yards</option>
+                                <option value="ft" selected>Feet</option>
+                                <option value="in">Inches</option>
+                            </select>
+                        </div>
+                        <button class="btn calculate-btn" onclick="convertLength()">Convert</button>
+                        <div class="result-box" id="lengthResult"></div>
+                    </div>
+
+                    <!-- Weight Converter -->
+                    <div class="financial-panel" id="weight-panel">
+                        <div class="form-group">
+                            <label>Value</label>
+                            <input type="number" id="weightValue" value="1" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>From</label>
+                            <select id="weightFrom">
+                                <option value="kg" selected>Kilograms</option>
+                                <option value="g">Grams</option>
+                                <option value="mg">Milligrams</option>
+                                <option value="lb">Pounds</option>
+                                <option value="oz">Ounces</option>
+                                <option value="ton">Metric Tons</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>To</label>
+                            <select id="weightTo">
+                                <option value="kg">Kilograms</option>
+                                <option value="g">Grams</option>
+                                <option value="mg">Milligrams</option>
+                                <option value="lb" selected>Pounds</option>
+                                <option value="oz">Ounces</option>
+                                <option value="ton">Metric Tons</option>
+                            </select>
+                        </div>
+                        <button class="btn calculate-btn" onclick="convertWeight()">Convert</button>
+                        <div class="result-box" id="weightResult"></div>
+                    </div>
+
+                    <!-- Temperature Converter -->
+                    <div class="financial-panel" id="temperature-panel">
+                        <div class="form-group">
+                            <label>Value</label>
+                            <input type="number" id="tempValue" value="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>From</label>
+                            <select id="tempFrom">
+                                <option value="C" selected>Celsius</option>
+                                <option value="F">Fahrenheit</option>
+                                <option value="K">Kelvin</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>To</label>
+                            <select id="tempTo">
+                                <option value="C">Celsius</option>
+                                <option value="F" selected>Fahrenheit</option>
+                                <option value="K">Kelvin</option>
+                            </select>
+                        </div>
+                        <button class="btn calculate-btn" onclick="convertTemperature()">Convert</button>
+                        <div class="result-box" id="tempResult"></div>
+                    </div>
+
+                    <!-- Volume Converter -->
+                    <div class="financial-panel" id="volume-panel">
+                        <div class="form-group">
+                            <label>Value</label>
+                            <input type="number" id="volumeValue" value="1" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>From</label>
+                            <select id="volumeFrom">
+                                <option value="l" selected>Liters</option>
+                                <option value="ml">Milliliters</option>
+                                <option value="gal">Gallons (US)</option>
+                                <option value="qt">Quarts</option>
+                                <option value="pt">Pints</option>
+                                <option value="cup">Cups</option>
+                                <option value="floz">Fluid Ounces</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>To</label>
+                            <select id="volumeTo">
+                                <option value="l">Liters</option>
+                                <option value="ml">Milliliters</option>
+                                <option value="gal" selected>Gallons (US)</option>
+                                <option value="qt">Quarts</option>
+                                <option value="pt">Pints</option>
+                                <option value="cup">Cups</option>
+                                <option value="floz">Fluid Ounces</option>
+                            </select>
+                        </div>
+                        <button class="btn calculate-btn" onclick="convertVolume()">Convert</button>
+                        <div class="result-box" id="volumeResult"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Calculator Tab -->
+        <div class="tab-content" id="statistics-tab">
+            <div class="calculator-wrapper single">
+                <div class="calculator">
+                    <h2 class="calc-title">Statistics Calculator</h2>
+                    
+                    <div class="form-group">
+                        <label>Enter Numbers (comma-separated)</label>
+                        <textarea id="statsData" rows="4" placeholder="e.g., 1, 2, 3, 4, 5"></textarea>
+                    </div>
+                    
+                    <button class="btn calculate-btn" onclick="calculateStatistics()">Calculate Statistics</button>
+                    
+                    <div class="result-box" id="statsResult"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Base Converter Tab -->
+        <div class="tab-content" id="base-tab">
+            <div class="calculator-wrapper single">
+                <div class="calculator">
+                    <h2 class="calc-title">Base Converter</h2>
+                    
+                    <div class="form-group">
+                        <label>Decimal (Base 10)</label>
+                        <input type="text" id="decimal" placeholder="Enter decimal number">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Binary (Base 2)</label>
+                        <input type="text" id="binary" placeholder="Enter binary number">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Octal (Base 8)</label>
+                        <input type="text" id="octal" placeholder="Enter octal number">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Hexadecimal (Base 16)</label>
+                        <input type="text" id="hexadecimal" placeholder="Enter hex number">
+                    </div>
+                    
+                    <button class="btn calculate-btn" onclick="convertBase()">Convert All</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Matrix Calculator Tab -->
+        <div class="tab-content" id="matrix-tab">
+            <div class="calculator-wrapper single">
+                <div class="calculator">
+                    <h2 class="calc-title">Matrix Calculator</h2>
+                    
+                    <div class="financial-tabs">
+                        <button class="mini-tab active" data-calc="matrixadd">Add/Subtract</button>
+                        <button class="mini-tab" data-calc="matrixmult">Multiply</button>
+                        <button class="mini-tab" data-calc="matrixdet">Determinant</button>
+                        <button class="mini-tab" data-calc="matrixtrans">Transpose</button>
+                    </div>
+
+                    <!-- Add/Subtract -->
+                    <div class="financial-panel active" id="matrixadd-panel">
+                        <div class="form-group">
+                            <label>Matrix A (rows separated by semicolons, e.g., 1,2;3,4)</label>
+                            <textarea id="matrixA1" rows="3" placeholder="1,2;3,4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Matrix B</label>
+                            <textarea id="matrixB1" rows="3" placeholder="5,6;7,8"></textarea>
+                        </div>
+                        <button class="btn calculate-btn" onclick="matrixAdd()">Add (A + B)</button>
+                        <button class="btn calculate-btn" onclick="matrixSubtract()">Subtract (A - B)</button>
+                        <div class="result-box" id="matrixAddResult"></div>
+                    </div>
+
+                    <!-- Multiply -->
+                    <div class="financial-panel" id="matrixmult-panel">
+                        <div class="form-group">
+                            <label>Matrix A</label>
+                            <textarea id="matrixA2" rows="3" placeholder="1,2;3,4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Matrix B</label>
+                            <textarea id="matrixB2" rows="3" placeholder="5,6;7,8"></textarea>
+                        </div>
+                        <button class="btn calculate-btn" onclick="matrixMultiply()">Multiply (A × B)</button>
+                        <div class="result-box" id="matrixMultResult"></div>
+                    </div>
+
+                    <!-- Determinant -->
+                    <div class="financial-panel" id="matrixdet-panel">
+                        <div class="form-group">
+                            <label>Square Matrix (2×2 or 3×3)</label>
+                            <textarea id="matrixDet" rows="3" placeholder="1,2;3,4"></textarea>
+                        </div>
+                        <button class="btn calculate-btn" onclick="matrixDeterminant()">Calculate Determinant</button>
+                        <div class="result-box" id="matrixDetResult"></div>
+                    </div>
+
+                    <!-- Transpose -->
+                    <div class="financial-panel" id="matrixtrans-panel">
+                        <div class="form-group">
+                            <label>Matrix</label>
+                            <textarea id="matrixTrans" rows="3" placeholder="1,2,3;4,5,6"></textarea>
+                        </div>
+                        <button class="btn calculate-btn" onclick="matrixTranspose()">Transpose</button>
+                        <div class="result-box" id="matrixTransResult"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Date/Time Calculator Tab -->
+        <div class="tab-content" id="datetime-tab">
+            <div class="calculator-wrapper single">
+                <div class="calculator">
+                    <h2 class="calc-title">Date/Time Calculator</h2>
+                    
+                    <div class="financial-tabs">
+                        <button class="mini-tab active" data-calc="datediff">Date Difference</button>
+                        <button class="mini-tab" data-calc="dateadd">Add/Subtract Days</button>
+                        <button class="mini-tab" data-calc="age">Age Calculator</button>
+                    </div>
+
+                    <!-- Date Difference -->
+                    <div class="financial-panel active" id="datediff-panel">
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <input type="date" id="startDate">
+                        </div>
+                        <div class="form-group">
+                            <label>End Date</label>
+                            <input type="date" id="endDate">
+                        </div>
+                        <button class="btn calculate-btn" onclick="calculateDateDifference()">Calculate Difference</button>
+                        <div class="result-box" id="dateDiffResult"></div>
+                    </div>
+
+                    <!-- Add/Subtract Days -->
+                    <div class="financial-panel" id="dateadd-panel">
+                        <div class="form-group">
+                            <label>Starting Date</label>
+                            <input type="date" id="baseDate">
+                        </div>
+                        <div class="form-group">
+                            <label>Days to Add/Subtract</label>
+                            <input type="number" id="daysToAdd" placeholder="e.g., 30 or -30">
+                        </div>
+                        <button class="btn calculate-btn" onclick="addSubtractDays()">Calculate New Date</button>
+                        <div class="result-box" id="dateAddResult"></div>
+                    </div>
+
+                    <!-- Age Calculator -->
+                    <div class="financial-panel" id="age-panel">
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+                            <input type="date" id="birthDate">
+                        </div>
+                        <button class="btn calculate-btn" onclick="calculateAge()">Calculate Age</button>
+                        <div class="result-box" id="ageResult"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Geometry Calculator Tab -->
+        <div class="tab-content" id="geometry-tab">
+            <div class="calculator-wrapper single">
+                <div class="calculator">
+                    <h2 class="calc-title">Geometry Calculator</h2>
+                    
+                    <div class="financial-tabs">
+                        <button class="mini-tab active" data-calc="circle">Circle</button>
+                        <button class="mini-tab" data-calc="triangle">Triangle</button>
+                        <button class="mini-tab" data-calc="rectangle">Rectangle</button>
+                        <button class="mini-tab" data-calc="sphere">Sphere</button>
+                        <button class="mini-tab" data-calc="cylinder">Cylinder</button>
+                    </div>
+
+                    <!-- Circle -->
+                    <div class="financial-panel active" id="circle-panel">
+                        <div class="form-group">
+                            <label>Radius</label>
+                            <input type="number" id="circleRadius" placeholder="Enter radius" step="0.01">
+                        </div>
+                        <button class="btn calculate-btn" onclick="calculateCircle()">Calculate</button>
+                        <div class="result-box" id="circleResult"></div>
+                    </div>
+
+                    <!-- Triangle -->
+                    <div class="financial-panel" id="triangle-panel">
+                        <div class="form-group">
+                            <label>Base</label>
+                            <input type="number" id="triangleBase" placeholder="Enter base" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>Height</label>
+                            <input type="number" id="triangleHeight" placeholder="Enter height" step="0.01">
+                        </div>
+                        <button class="btn calculate-btn" onclick="calculateTriangle()">Calculate Area</button>
+                        <div class="result-box" id="triangleResult"></div>
+                    </div>
+
+                    <!-- Rectangle -->
+                    <div class="financial-panel" id="rectangle-panel">
+                        <div class="form-group">
+                            <label>Length</label>
+                            <input type="number" id="rectLength" placeholder="Enter length" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>Width</label>
+                            <input type="number" id="rectWidth" placeholder="Enter width" step="0.01">
+                        </div>
+                        <button class="btn calculate-btn" onclick="calculateRectangle()">Calculate</button>
+                        <div class="result-box" id="rectResult"></div>
+                    </div>
+
+                    <!-- Sphere -->
+                    <div class="financial-panel" id="sphere-panel">
+                        <div class="form-group">
+                            <label>Radius</label>
+                            <input type="number" id="sphereRadius" placeholder="Enter radius" step="0.01">
+                        </div>
+                        <button class="btn calculate-btn" onclick="calculateSphere()">Calculate</button>
+                        <div class="result-box" id="sphereResult"></div>
+                    </div>
+
+                    <!-- Cylinder -->
+                    <div class="financial-panel" id="cylinder-panel">
+                        <div class="form-group">
+                            <label>Radius</label>
+                            <input type="number" id="cylinderRadius" placeholder="Enter radius" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>Height</label>
+                            <input type="number" id="cylinderHeight" placeholder="Enter height" step="0.01">
+                        </div>
+                        <button class="btn calculate-btn" onclick="calculateCylinder()">Calculate</button>
+                        <div class="result-box" id="cylinderResult"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Health & Fitness Calculator Tab -->
+        <div class="tab-content" id="health-tab">
+            <div class="calculator-wrapper single">
+                <div class="calculator">
+                    <h2 class="calc-title">Health & Fitness Calculator</h2>
+                    
+                    <div class="financial-tabs">
+                        <button class="mini-tab active" data-calc="bmi">BMI</button>
+                        <button class="mini-tab" data-calc="calories">Calories</button>
+                        <button class="mini-tab" data-calc="bodyfat">Body Fat %</button>
+                    </div>
+
+                    <!-- BMI Calculator -->
+                    <div class="financial-panel active" id="bmi-panel">
+                        <div class="form-group">
+                            <label>Weight (kg)</label>
+                            <input type="number" id="bmiWeight" placeholder="Enter weight" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Height (cm)</label>
+                            <input type="number" id="bmiHeight" placeholder="Enter height" step="0.1">
+                        </div>
+                        <button class="btn calculate-btn" onclick="calculateBMI()">Calculate BMI</button>
+                        <div class="result-box" id="bmiResult"></div>
+                    </div>
+
+                    <!-- Calorie Calculator -->
+                    <div class="financial-panel" id="calories-panel">
+                        <div class="form-group">
+                            <label>Age</label>
+                            <input type="number" id="calAge" placeholder="Enter age">
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select id="calGender">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Weight (kg)</label>
+                            <input type="number" id="calWeight" placeholder="Enter weight" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Height (cm)</label>
+                            <input type="number" id="calHeight" placeholder="Enter height" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Activity Level</label>
+                            <select id="calActivity">
+                                <option value="1.2">Sedentary (little/no exercise)</option>
+                                <option value="1.375">Lightly active (1-3 days/week)</option>
+                                <option value="1.55">Moderately active (3-5 days/week)</option>
+                                <option value="1.725">Very active (6-7 days/week)</option>
+                                <option value="1.9">Extra active (athlete)</option>
+                            </select>
+                        </div>
+                        <button class="btn calculate-btn" onclick="calculateCalories()">Calculate Calories</button>
+                        <div class="result-box" id="caloriesResult"></div>
+                    </div>
+
+                    <!-- Body Fat Calculator -->
+                    <div class="financial-panel" id="bodyfat-panel">
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select id="bfGender">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Age</label>
+                            <input type="number" id="bfAge" placeholder="Enter age">
+                        </div>
+                        <div class="form-group">
+                            <label>Weight (kg)</label>
+                            <input type="number" id="bfWeight" placeholder="Enter weight" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Height (cm)</label>
+                            <input type="number" id="bfHeight" placeholder="Enter height" step="0.1">
+                        </div>
+                        <button class="btn calculate-btn" onclick="calculateBodyFat()">Calculate Body Fat</button>
+                        <div class="result-box" id="bodyFatResult"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tax & Tip Calculator Tab -->
+        <div class="tab-content" id="taxtip-tab">
+            <div class="calculator-wrapper single">
+                <div class="calculator">
+                    <h2 class="calc-title">Tax & Tip Calculator</h2>
+                    
+                    <div class="form-group">
+                        <label>Bill Amount ($)</label>
+                        <input type="number" id="billAmount" placeholder="Enter bill amount" step="0.01">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Tax Rate (%)</label>
+                        <input type="number" id="taxRate" placeholder="e.g., 8.5" step="0.1" value="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Tip Percentage (%)</label>
+                        <input type="number" id="tipPercent" placeholder="e.g., 15, 18, 20" step="1" value="15">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Number of People (Split Bill)</label>
+                        <input type="number" id="numPeople" placeholder="Enter number" min="1" value="1">
+                    </div>
+                    
+                    <button class="btn calculate-btn" onclick="calculateTaxTip()">Calculate</button>
+                    
+                    <div class="result-box" id="taxTipResult"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scientific Notation Calculator Tab -->
+        <div class="tab-content" id="scinotation-tab">
+            <div class="calculator-wrapper single">
+                <div class="calculator">
+                    <h2 class="calc-title">Scientific Notation Converter</h2>
+                    
+                    <div class="form-group">
+                        <label>Standard Number</label>
+                        <input type="text" id="standardNumber" placeholder="e.g., 12345.67">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Scientific Notation (e.g., 1.234567e4)</label>
+                        <input type="text" id="scientificNumber" placeholder="e.g., 1.234567e4">
+                    </div>
+                    
+                    <button class="btn calculate-btn" onclick="convertScientific()">Convert</button>
+                    
+                    <div class="result-box" id="sciNotationResult"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Complex Number Calculator Tab -->
+        <div class="tab-content" id="complex-tab">
+            <div class="calculator-wrapper single">
+                <div class="calculator">
+                    <h2 class="calc-title">Complex Number Calculator</h2>
+                    
+                    <p style="text-align: center; color: #4a5568; margin-bottom: 20px;">Format: a + bi</p>
+                    
+                    <div class="form-group">
+                        <label>Complex Number 1 (Real part)</label>
+                        <input type="number" id="complex1Real" placeholder="Real" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Complex Number 1 (Imaginary part)</label>
+                        <input type="number" id="complex1Imag" placeholder="Imaginary" step="0.01">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Complex Number 2 (Real part)</label>
+                        <input type="number" id="complex2Real" placeholder="Real" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Complex Number 2 (Imaginary part)</label>
+                        <input type="number" id="complex2Imag" placeholder="Imaginary" step="0.01">
+                    </div>
+                    
+                    <button class="btn calculate-btn" onclick="complexAdd()">Add</button>
+                    <button class="btn calculate-btn" onclick="complexSubtract()">Subtract</button>
+                    <button class="btn calculate-btn" onclick="complexMultiply()">Multiply</button>
+                    <button class="btn calculate-btn" onclick="complexDivide()">Divide</button>
+                    
+                    <div class="result-box" id="complexResult"></div>
                 </div>
             </div>
         </div>

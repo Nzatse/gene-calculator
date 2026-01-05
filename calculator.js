@@ -884,3 +884,826 @@ function exportTape() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
+
+// ============================================
+// UNIT CONVERTER FUNCTIONS
+// ============================================
+
+// Currency exchange rates (approximate - in production, use API)
+const currencyRates = {
+    USD: 1,
+    EUR: 0.92,
+    GBP: 0.79,
+    JPY: 149.50,
+    CNY: 7.24,
+    CAD: 1.36,
+    AUD: 1.52,
+    CHF: 0.88,
+    INR: 83.12
+};
+
+function convertCurrency() {
+    const amount = parseFloat(document.getElementById('currencyAmount').value);
+    const from = document.getElementById('currencyFrom').value;
+    const to = document.getElementById('currencyTo').value;
+    
+    if (!amount) {
+        document.getElementById('currencyResult').innerHTML = '<p style="color: red;">Please enter an amount</p>';
+        return;
+    }
+    
+    // Convert to USD first, then to target currency
+    const amountInUSD = amount / currencyRates[from];
+    const result = amountInUSD * currencyRates[to];
+    
+    document.getElementById('currencyResult').innerHTML = `
+        <h3>Conversion Result</h3>
+        <p class="highlight">${amount.toFixed(2)} ${from} = ${result.toFixed(2)} ${to}</p>
+        <p>Exchange Rate: 1 ${from} = ${(currencyRates[to] / currencyRates[from]).toFixed(4)} ${to}</p>
+        <p style="font-size: 12px; color: #718096; margin-top: 10px;">
+            Note: Rates are approximate. For accurate rates, use a real-time currency API.
+        </p>
+    `;
+}
+
+// Length conversion factors (to meters)
+const lengthFactors = {
+    m: 1,
+    km: 1000,
+    cm: 0.01,
+    mm: 0.001,
+    mi: 1609.344,
+    yd: 0.9144,
+    ft: 0.3048,
+    in: 0.0254
+};
+
+function convertLength() {
+    const value = parseFloat(document.getElementById('lengthValue').value);
+    const from = document.getElementById('lengthFrom').value;
+    const to = document.getElementById('lengthTo').value;
+    
+    if (!value) {
+        document.getElementById('lengthResult').innerHTML = '<p style="color: red;">Please enter a value</p>';
+        return;
+    }
+    
+    const meters = value * lengthFactors[from];
+    const result = meters / lengthFactors[to];
+    
+    document.getElementById('lengthResult').innerHTML = `
+        <h3>Conversion Result</h3>
+        <p class="highlight">${value} ${from} = ${result.toFixed(4)} ${to}</p>
+    `;
+}
+
+// Weight conversion factors (to kilograms)
+const weightFactors = {
+    kg: 1,
+    g: 0.001,
+    mg: 0.000001,
+    lb: 0.453592,
+    oz: 0.0283495,
+    ton: 1000
+};
+
+function convertWeight() {
+    const value = parseFloat(document.getElementById('weightValue').value);
+    const from = document.getElementById('weightFrom').value;
+    const to = document.getElementById('weightTo').value;
+    
+    if (!value) {
+        document.getElementById('weightResult').innerHTML = '<p style="color: red;">Please enter a value</p>';
+        return;
+    }
+    
+    const kg = value * weightFactors[from];
+    const result = kg / weightFactors[to];
+    
+    document.getElementById('weightResult').innerHTML = `
+        <h3>Conversion Result</h3>
+        <p class="highlight">${value} ${from} = ${result.toFixed(4)} ${to}</p>
+    `;
+}
+
+function convertTemperature() {
+    const value = parseFloat(document.getElementById('tempValue').value);
+    const from = document.getElementById('tempFrom').value;
+    const to = document.getElementById('tempTo').value;
+    
+    if (isNaN(value)) {
+        document.getElementById('tempResult').innerHTML = '<p style="color: red;">Please enter a value</p>';
+        return;
+    }
+    
+    let celsius;
+    
+    // Convert to Celsius first
+    if (from === 'C') celsius = value;
+    else if (from === 'F') celsius = (value - 32) * 5/9;
+    else if (from === 'K') celsius = value - 273.15;
+    
+    // Convert from Celsius to target
+    let result;
+    if (to === 'C') result = celsius;
+    else if (to === 'F') result = (celsius * 9/5) + 32;
+    else if (to === 'K') result = celsius + 273.15;
+    
+    document.getElementById('tempResult').innerHTML = `
+        <h3>Conversion Result</h3>
+        <p class="highlight">${value}°${from} = ${result.toFixed(2)}°${to}</p>
+    `;
+}
+
+// Volume conversion factors (to liters)
+const volumeFactors = {
+    l: 1,
+    ml: 0.001,
+    gal: 3.78541,
+    qt: 0.946353,
+    pt: 0.473176,
+    cup: 0.236588,
+    floz: 0.0295735
+};
+
+function convertVolume() {
+    const value = parseFloat(document.getElementById('volumeValue').value);
+    const from = document.getElementById('volumeFrom').value;
+    const to = document.getElementById('volumeTo').value;
+    
+    if (!value) {
+        document.getElementById('volumeResult').innerHTML = '<p style="color: red;">Please enter a value</p>';
+        return;
+    }
+    
+    const liters = value * volumeFactors[from];
+    const result = liters / volumeFactors[to];
+    
+    document.getElementById('volumeResult').innerHTML = `
+        <h3>Conversion Result</h3>
+        <p class="highlight">${value} ${from} = ${result.toFixed(4)} ${to}</p>
+    `;
+}
+
+// ============================================
+// STATISTICS CALCULATOR FUNCTIONS
+// ============================================
+
+function calculateStatistics() {
+    const input = document.getElementById('statsData').value;
+    const numbers = input.split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
+    
+    if (numbers.length === 0) {
+        document.getElementById('statsResult').innerHTML = '<p style="color: red;">Please enter valid numbers</p>';
+        return;
+    }
+    
+    const sorted = [...numbers].sort((a, b) => a - b);
+    const sum = numbers.reduce((a, b) => a + b, 0);
+    const mean = sum / numbers.length;
+    
+    // Median
+    const mid = Math.floor(sorted.length / 2);
+    const median = sorted.length % 2 === 0 ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid];
+    
+    // Mode
+    const frequency = {};
+    let maxFreq = 0;
+    numbers.forEach(n => {
+        frequency[n] = (frequency[n] || 0) + 1;
+        maxFreq = Math.max(maxFreq, frequency[n]);
+    });
+    const modes = Object.keys(frequency).filter(k => frequency[k] === maxFreq);
+    const mode = maxFreq > 1 ? modes.join(', ') : 'No mode';
+    
+    // Standard Deviation
+    const variance = numbers.reduce((sum, n) => sum + Math.pow(n - mean, 2), 0) / numbers.length;
+    const stdDev = Math.sqrt(variance);
+    
+    // Range
+    const range = sorted[sorted.length - 1] - sorted[0];
+    
+    document.getElementById('statsResult').innerHTML = `
+        <h3>Statistical Analysis</h3>
+        <p><strong>Count:</strong> ${numbers.length}</p>
+        <p><strong>Sum:</strong> ${sum.toFixed(4)}</p>
+        <p class="highlight">Mean: ${mean.toFixed(4)}</p>
+        <p><strong>Median:</strong> ${median.toFixed(4)}</p>
+        <p><strong>Mode:</strong> ${mode}</p>
+        <p><strong>Std Deviation:</strong> ${stdDev.toFixed(4)}</p>
+        <p><strong>Variance:</strong> ${variance.toFixed(4)}</p>
+        <p><strong>Range:</strong> ${range.toFixed(4)}</p>
+        <p><strong>Min:</strong> ${sorted[0]}</p>
+        <p><strong>Max:</strong> ${sorted[sorted.length - 1]}</p>
+    `;
+}
+
+// ============================================
+// BASE CONVERTER FUNCTIONS
+// ============================================
+
+function convertBase() {
+    const decimal = document.getElementById('decimal').value;
+    const binary = document.getElementById('binary').value;
+    const octal = document.getElementById('octal').value;
+    const hex = document.getElementById('hexadecimal').value;
+    
+    let decValue;
+    
+    // Determine which field has input
+    if (decimal) {
+        decValue = parseInt(decimal, 10);
+    } else if (binary) {
+        decValue = parseInt(binary, 2);
+    } else if (octal) {
+        decValue = parseInt(octal, 8);
+    } else if (hex) {
+        decValue = parseInt(hex, 16);
+    } else {
+        alert('Please enter a value in any field');
+        return;
+    }
+    
+    if (isNaN(decValue)) {
+        alert('Invalid input');
+        return;
+    }
+    
+    // Convert to all bases
+    document.getElementById('decimal').value = decValue.toString(10);
+    document.getElementById('binary').value = decValue.toString(2);
+    document.getElementById('octal').value = decValue.toString(8);
+    document.getElementById('hexadecimal').value = decValue.toString(16).toUpperCase();
+}
+
+// ============================================
+// MATRIX CALCULATOR FUNCTIONS
+// ============================================
+
+function parseMatrix(str) {
+    return str.trim().split(';').map(row => 
+        row.split(',').map(val => parseFloat(val.trim()))
+    );
+}
+
+function matrixToString(matrix) {
+    return matrix.map(row => row.map(n => n.toFixed(2)).join('  ')).join('<br>');
+}
+
+function matrixAdd() {
+    try {
+        const a = parseMatrix(document.getElementById('matrixA1').value);
+        const b = parseMatrix(document.getElementById('matrixB1').value);
+        
+        if (a.length !== b.length || a[0].length !== b[0].length) {
+            throw new Error('Matrices must have same dimensions');
+        }
+        
+        const result = a.map((row, i) => row.map((val, j) => val + b[i][j]));
+        
+        document.getElementById('matrixAddResult').innerHTML = `
+            <h3>Result (A + B)</h3>
+            <p style="font-family: monospace; line-height: 1.8;">${matrixToString(result)}</p>
+        `;
+    } catch (error) {
+        document.getElementById('matrixAddResult').innerHTML = `<p style="color: red;">${error.message}</p>`;
+    }
+}
+
+function matrixSubtract() {
+    try {
+        const a = parseMatrix(document.getElementById('matrixA1').value);
+        const b = parseMatrix(document.getElementById('matrixB1').value);
+        
+        if (a.length !== b.length || a[0].length !== b[0].length) {
+            throw new Error('Matrices must have same dimensions');
+        }
+        
+        const result = a.map((row, i) => row.map((val, j) => val - b[i][j]));
+        
+        document.getElementById('matrixAddResult').innerHTML = `
+            <h3>Result (A - B)</h3>
+            <p style="font-family: monospace; line-height: 1.8;">${matrixToString(result)}</p>
+        `;
+    } catch (error) {
+        document.getElementById('matrixAddResult').innerHTML = `<p style="color: red;">${error.message}</p>`;
+    }
+}
+
+function matrixMultiply() {
+    try {
+        const a = parseMatrix(document.getElementById('matrixA2').value);
+        const b = parseMatrix(document.getElementById('matrixB2').value);
+        
+        if (a[0].length !== b.length) {
+            throw new Error('Matrix A columns must equal Matrix B rows');
+        }
+        
+        const result = [];
+        for (let i = 0; i < a.length; i++) {
+            result[i] = [];
+            for (let j = 0; j < b[0].length; j++) {
+                let sum = 0;
+                for (let k = 0; k < a[0].length; k++) {
+                    sum += a[i][k] * b[k][j];
+                }
+                result[i][j] = sum;
+            }
+        }
+        
+        document.getElementById('matrixMultResult').innerHTML = `
+            <h3>Result (A × B)</h3>
+            <p style="font-family: monospace; line-height: 1.8;">${matrixToString(result)}</p>
+        `;
+    } catch (error) {
+        document.getElementById('matrixMultResult').innerHTML = `<p style="color: red;">${error.message}</p>`;
+    }
+}
+
+function matrixDeterminant() {
+    try {
+        const matrix = parseMatrix(document.getElementById('matrixDet').value);
+        
+        if (matrix.length !== matrix[0].length) {
+            throw new Error('Matrix must be square');
+        }
+        
+        let det;
+        if (matrix.length === 2) {
+            det = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+        } else if (matrix.length === 3) {
+            det = matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]) -
+                  matrix[0][1] * (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0]) +
+                  matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0]);
+        } else {
+            throw new Error('Only 2×2 and 3×3 matrices supported');
+        }
+        
+        document.getElementById('matrixDetResult').innerHTML = `
+            <h3>Determinant</h3>
+            <p class="highlight">${det.toFixed(4)}</p>
+        `;
+    } catch (error) {
+        document.getElementById('matrixDetResult').innerHTML = `<p style="color: red;">${error.message}</p>`;
+    }
+}
+
+function matrixTranspose() {
+    try {
+        const matrix = parseMatrix(document.getElementById('matrixTrans').value);
+        const result = matrix[0].map((_, colIndex) => matrix.map(row => row[colIndex]));
+        
+        document.getElementById('matrixTransResult').innerHTML = `
+            <h3>Transposed Matrix</h3>
+            <p style="font-family: monospace; line-height: 1.8;">${matrixToString(result)}</p>
+        `;
+    } catch (error) {
+        document.getElementById('matrixTransResult').innerHTML = `<p style="color: red;">${error.message}</p>`;
+    }
+}
+
+// ============================================
+// DATE/TIME CALCULATOR FUNCTIONS
+// ============================================
+
+function calculateDateDifference() {
+    const start = new Date(document.getElementById('startDate').value);
+    const end = new Date(document.getElementById('endDate').value);
+    
+    if (!document.getElementById('startDate').value || !document.getElementById('endDate').value) {
+        document.getElementById('dateDiffResult').innerHTML = '<p style="color: red;">Please select both dates</p>';
+        return;
+    }
+    
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffWeeks = Math.floor(diffDays / 7);
+    const diffMonths = Math.floor(diffDays / 30.44);
+    const diffYears = Math.floor(diffDays / 365.25);
+    
+    document.getElementById('dateDiffResult').innerHTML = `
+        <h3>Date Difference</h3>
+        <p class="highlight">${diffDays} days</p>
+        <p>${diffWeeks} weeks</p>
+        <p>${diffMonths} months (approx)</p>
+        <p>${diffYears} years (approx)</p>
+        <p>${(diffDays / 7).toFixed(2)} weeks (exact)</p>
+        <p>${(diffTime / (1000 * 60 * 60)).toFixed(0)} hours</p>
+    `;
+}
+
+function addSubtractDays() {
+    const base = new Date(document.getElementById('baseDate').value);
+    const days = parseInt(document.getElementById('daysToAdd').value);
+    
+    if (!document.getElementById('baseDate').value || isNaN(days)) {
+        document.getElementById('dateAddResult').innerHTML = '<p style="color: red;">Please enter valid values</p>';
+        return;
+    }
+    
+    const result = new Date(base);
+    result.setDate(result.getDate() + days);
+    
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    
+    document.getElementById('dateAddResult').innerHTML = `
+        <h3>Result</h3>
+        <p class="highlight">${result.toLocaleDateString('en-US', options)}</p>
+        <p>ISO Format: ${result.toISOString().split('T')[0]}</p>
+    `;
+}
+
+function calculateAge() {
+    const birth = new Date(document.getElementById('birthDate').value);
+    
+    if (!document.getElementById('birthDate').value) {
+        document.getElementById('ageResult').innerHTML = '<p style="color: red;">Please select your birth date</p>';
+        return;
+    }
+    
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+        age--;
+    }
+    
+    const nextBirthday = new Date(today.getFullYear(), birth.getMonth(), birth.getDate());
+    if (nextBirthday < today) {
+        nextBirthday.setFullYear(today.getFullYear() + 1);
+    }
+    
+    const daysUntilBirthday = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+    const totalDays = Math.floor((today - birth) / (1000 * 60 * 60 * 24));
+    
+    document.getElementById('ageResult').innerHTML = `
+        <h3>Your Age</h3>
+        <p class="highlight">${age} years old</p>
+        <p>You've lived ${totalDays.toLocaleString()} days</p>
+        <p>Next birthday in ${daysUntilBirthday} days</p>
+        <p>Birth date: ${birth.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+    `;
+}
+
+// ============================================
+// GEOMETRY CALCULATOR FUNCTIONS
+// ============================================
+
+function calculateCircle() {
+    const r = parseFloat(document.getElementById('circleRadius').value);
+    
+    if (!r || r <= 0) {
+        document.getElementById('circleResult').innerHTML = '<p style="color: red;">Please enter a valid radius</p>';
+        return;
+    }
+    
+    const area = Math.PI * r * r;
+    const circumference = 2 * Math.PI * r;
+    
+    document.getElementById('circleResult').innerHTML = `
+        <h3>Circle Calculations</h3>
+        <p class="highlight">Area: ${area.toFixed(2)}</p>
+        <p>Circumference: ${circumference.toFixed(2)}</p>
+        <p>Diameter: ${(2 * r).toFixed(2)}</p>
+    `;
+}
+
+function calculateTriangle() {
+    const base = parseFloat(document.getElementById('triangleBase').value);
+    const height = parseFloat(document.getElementById('triangleHeight').value);
+    
+    if (!base || !height || base <= 0 || height <= 0) {
+        document.getElementById('triangleResult').innerHTML = '<p style="color: red;">Please enter valid values</p>';
+        return;
+    }
+    
+    const area = (base * height) / 2;
+    
+    document.getElementById('triangleResult').innerHTML = `
+        <h3>Triangle Area</h3>
+        <p class="highlight">${area.toFixed(2)}</p>
+    `;
+}
+
+function calculateRectangle() {
+    const length = parseFloat(document.getElementById('rectLength').value);
+    const width = parseFloat(document.getElementById('rectWidth').value);
+    
+    if (!length || !width || length <= 0 || width <= 0) {
+        document.getElementById('rectResult').innerHTML = '<p style="color: red;">Please enter valid values</p>';
+        return;
+    }
+    
+    const area = length * width;
+    const perimeter = 2 * (length + width);
+    
+    document.getElementById('rectResult').innerHTML = `
+        <h3>Rectangle Calculations</h3>
+        <p class="highlight">Area: ${area.toFixed(2)}</p>
+        <p>Perimeter: ${perimeter.toFixed(2)}</p>
+    `;
+}
+
+function calculateSphere() {
+    const r = parseFloat(document.getElementById('sphereRadius').value);
+    
+    if (!r || r <= 0) {
+        document.getElementById('sphereResult').innerHTML = '<p style="color: red;">Please enter a valid radius</p>';
+        return;
+    }
+    
+    const volume = (4/3) * Math.PI * Math.pow(r, 3);
+    const surfaceArea = 4 * Math.PI * Math.pow(r, 2);
+    
+    document.getElementById('sphereResult').innerHTML = `
+        <h3>Sphere Calculations</h3>
+        <p class="highlight">Volume: ${volume.toFixed(2)}</p>
+        <p>Surface Area: ${surfaceArea.toFixed(2)}</p>
+    `;
+}
+
+function calculateCylinder() {
+    const r = parseFloat(document.getElementById('cylinderRadius').value);
+    const h = parseFloat(document.getElementById('cylinderHeight').value);
+    
+    if (!r || !h || r <= 0 || h <= 0) {
+        document.getElementById('cylinderResult').innerHTML = '<p style="color: red;">Please enter valid values</p>';
+        return;
+    }
+    
+    const volume = Math.PI * Math.pow(r, 2) * h;
+    const surfaceArea = 2 * Math.PI * r * (r + h);
+    
+    document.getElementById('cylinderResult').innerHTML = `
+        <h3>Cylinder Calculations</h3>
+        <p class="highlight">Volume: ${volume.toFixed(2)}</p>
+        <p>Surface Area: ${surfaceArea.toFixed(2)}</p>
+    `;
+}
+
+// ============================================
+// HEALTH & FITNESS CALCULATOR FUNCTIONS
+// ============================================
+
+function calculateBMI() {
+    const weight = parseFloat(document.getElementById('bmiWeight').value);
+    const height = parseFloat(document.getElementById('bmiHeight').value) / 100; // convert to meters
+    
+    if (!weight || !height || weight <= 0 || height <= 0) {
+        document.getElementById('bmiResult').innerHTML = '<p style="color: red;">Please enter valid values</p>';
+        return;
+    }
+    
+    const bmi = weight / (height * height);
+    
+    let category, color;
+    if (bmi < 18.5) {
+        category = 'Underweight';
+        color = '#3182ce';
+    } else if (bmi < 25) {
+        category = 'Normal weight';
+        color = '#48bb78';
+    } else if (bmi < 30) {
+        category = 'Overweight';
+        color = '#ed8936';
+    } else {
+        category = 'Obese';
+        color = '#f56565';
+    }
+    
+    document.getElementById('bmiResult').innerHTML = `
+        <h3>BMI Result</h3>
+        <p class="highlight">${bmi.toFixed(1)}</p>
+        <p style="color: ${color}; font-weight: 600; font-size: 18px;">${category}</p>
+        <p style="margin-top: 10px; font-size: 13px; color: #4a5568;">
+            <strong>BMI Ranges:</strong><br>
+            Underweight: < 18.5<br>
+            Normal: 18.5 - 24.9<br>
+            Overweight: 25 - 29.9<br>
+            Obese: ≥ 30
+        </p>
+    `;
+}
+
+function calculateCalories() {
+    const age = parseInt(document.getElementById('calAge').value);
+    const gender = document.getElementById('calGender').value;
+    const weight = parseFloat(document.getElementById('calWeight').value);
+    const height = parseFloat(document.getElementById('calHeight').value);
+    const activity = parseFloat(document.getElementById('calActivity').value);
+    
+    if (!age || !weight || !height) {
+        document.getElementById('caloriesResult').innerHTML = '<p style="color: red;">Please fill all fields</p>';
+        return;
+    }
+    
+    // Mifflin-St Jeor Equation
+    let bmr;
+    if (gender === 'male') {
+        bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+    } else {
+        bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+    }
+    
+    const tdee = bmr * activity;
+    const lose = tdee - 500;
+    const gain = tdee + 500;
+    
+    document.getElementById('caloriesResult').innerHTML = `
+        <h3>Daily Calorie Needs</h3>
+        <p><strong>BMR (Base Metabolic Rate):</strong> ${Math.round(bmr)} calories</p>
+        <p class="highlight">Maintenance: ${Math.round(tdee)} calories/day</p>
+        <p><strong>Weight Loss:</strong> ${Math.round(lose)} calories/day</p>
+        <p><strong>Weight Gain:</strong> ${Math.round(gain)} calories/day</p>
+    `;
+}
+
+function calculateBodyFat() {
+    const gender = document.getElementById('bfGender').value;
+    const age = parseInt(document.getElementById('bfAge').value);
+    const weight = parseFloat(document.getElementById('bfWeight').value);
+    const height = parseFloat(document.getElementById('bfHeight').value);
+    
+    if (!age || !weight || !height) {
+        document.getElementById('bodyFatResult').innerHTML = '<p style="color: red;">Please fill all fields</p>';
+        return;
+    }
+    
+    // BMI-based estimation (simplified)
+    const bmi = weight / Math.pow(height / 100, 2);
+    
+    let bodyFat;
+    if (gender === 'male') {
+        bodyFat = 1.20 * bmi + 0.23 * age - 16.2;
+    } else {
+        bodyFat = 1.20 * bmi + 0.23 * age - 5.4;
+    }
+    
+    let category;
+    if (gender === 'male') {
+        if (bodyFat < 6) category = 'Essential Fat';
+        else if (bodyFat < 14) category = 'Athletes';
+        else if (bodyFat < 18) category = 'Fitness';
+        else if (bodyFat < 25) category = 'Average';
+        else category = 'Obese';
+    } else {
+        if (bodyFat < 14) category = 'Essential Fat';
+        else if (bodyFat < 21) category = 'Athletes';
+        else if (bodyFat < 25) category = 'Fitness';
+        else if (bodyFat < 32) category = 'Average';
+        else category = 'Obese';
+    }
+    
+    document.getElementById('bodyFatResult').innerHTML = `
+        <h3>Body Fat Estimate</h3>
+        <p class="highlight">${bodyFat.toFixed(1)}%</p>
+        <p><strong>Category:</strong> ${category}</p>
+        <p style="font-size: 12px; color: #718096; margin-top: 10px;">
+            Note: This is an estimate. For accurate body fat %, use specialized equipment.
+        </p>
+    `;
+}
+
+// ============================================
+// TAX & TIP CALCULATOR FUNCTIONS
+// ============================================
+
+function calculateTaxTip() {
+    const bill = parseFloat(document.getElementById('billAmount').value);
+    const taxRate = parseFloat(document.getElementById('taxRate').value) / 100;
+    const tipPercent = parseFloat(document.getElementById('tipPercent').value) / 100;
+    const numPeople = parseInt(document.getElementById('numPeople').value);
+    
+    if (!bill || bill <= 0) {
+        document.getElementById('taxTipResult').innerHTML = '<p style="color: red;">Please enter a valid bill amount</p>';
+        return;
+    }
+    
+    const tax = bill * taxRate;
+    const subtotal = bill + tax;
+    const tip = subtotal * tipPercent;
+    const total = subtotal + tip;
+    const perPerson = total / numPeople;
+    
+    document.getElementById('taxTipResult').innerHTML = `
+        <h3>Bill Breakdown</h3>
+        <p><strong>Original Bill:</strong> $${bill.toFixed(2)}</p>
+        <p><strong>Tax (${(taxRate * 100).toFixed(1)}%):</strong> $${tax.toFixed(2)}</p>
+        <p><strong>Subtotal:</strong> $${subtotal.toFixed(2)}</p>
+        <p><strong>Tip (${(tipPercent * 100).toFixed(0)}%):</strong> $${tip.toFixed(2)}</p>
+        <p class="highlight">Total: $${total.toFixed(2)}</p>
+        ${numPeople > 1 ? `<p><strong>Per Person:</strong> $${perPerson.toFixed(2)}</p>` : ''}
+    `;
+}
+
+// ============================================
+// SCIENTIFIC NOTATION CONVERTER FUNCTIONS
+// ============================================
+
+function convertScientific() {
+    const standard = document.getElementById('standardNumber').value;
+    const scientific = document.getElementById('scientificNumber').value;
+    
+    let result = '';
+    
+    if (standard) {
+        const num = parseFloat(standard);
+        if (!isNaN(num)) {
+            const sciNotation = num.toExponential();
+            result = `<p><strong>Standard:</strong> ${num}</p>
+                     <p class="highlight">Scientific: ${sciNotation}</p>`;
+        } else {
+            result = '<p style="color: red;">Invalid number</p>';
+        }
+    } else if (scientific) {
+        const num = parseFloat(scientific);
+        if (!isNaN(num)) {
+            result = `<p class="highlight">Standard: ${num}</p>
+                     <p><strong>Scientific:</strong> ${num.toExponential()}</p>`;
+        } else {
+            result = '<p style="color: red;">Invalid scientific notation</p>';
+        }
+    } else {
+        result = '<p style="color: red;">Please enter a value</p>';
+    }
+    
+    document.getElementById('sciNotationResult').innerHTML = result;
+}
+
+// ============================================
+// COMPLEX NUMBER CALCULATOR FUNCTIONS
+// ============================================
+
+function complexAdd() {
+    const r1 = parseFloat(document.getElementById('complex1Real').value) || 0;
+    const i1 = parseFloat(document.getElementById('complex1Imag').value) || 0;
+    const r2 = parseFloat(document.getElementById('complex2Real').value) || 0;
+    const i2 = parseFloat(document.getElementById('complex2Imag').value) || 0;
+    
+    const realResult = r1 + r2;
+    const imagResult = i1 + i2;
+    
+    document.getElementById('complexResult').innerHTML = `
+        <h3>Addition Result</h3>
+        <p>(${r1} + ${i1}i) + (${r2} + ${i2}i)</p>
+        <p class="highlight">${realResult} + ${imagResult}i</p>
+    `;
+}
+
+function complexSubtract() {
+    const r1 = parseFloat(document.getElementById('complex1Real').value) || 0;
+    const i1 = parseFloat(document.getElementById('complex1Imag').value) || 0;
+    const r2 = parseFloat(document.getElementById('complex2Real').value) || 0;
+    const i2 = parseFloat(document.getElementById('complex2Imag').value) || 0;
+    
+    const realResult = r1 - r2;
+    const imagResult = i1 - i2;
+    
+    document.getElementById('complexResult').innerHTML = `
+        <h3>Subtraction Result</h3>
+        <p>(${r1} + ${i1}i) - (${r2} + ${i2}i)</p>
+        <p class="highlight">${realResult} + ${imagResult}i</p>
+    `;
+}
+
+function complexMultiply() {
+    const r1 = parseFloat(document.getElementById('complex1Real').value) || 0;
+    const i1 = parseFloat(document.getElementById('complex1Imag').value) || 0;
+    const r2 = parseFloat(document.getElementById('complex2Real').value) || 0;
+    const i2 = parseFloat(document.getElementById('complex2Imag').value) || 0;
+    
+    // (a + bi)(c + di) = (ac - bd) + (ad + bc)i
+    const realResult = r1 * r2 - i1 * i2;
+    const imagResult = r1 * i2 + i1 * r2;
+    
+    document.getElementById('complexResult').innerHTML = `
+        <h3>Multiplication Result</h3>
+        <p>(${r1} + ${i1}i) × (${r2} + ${i2}i)</p>
+        <p class="highlight">${realResult.toFixed(2)} + ${imagResult.toFixed(2)}i</p>
+    `;
+}
+
+function complexDivide() {
+    const r1 = parseFloat(document.getElementById('complex1Real').value) || 0;
+    const i1 = parseFloat(document.getElementById('complex1Imag').value) || 0;
+    const r2 = parseFloat(document.getElementById('complex2Real').value) || 0;
+    const i2 = parseFloat(document.getElementById('complex2Imag').value) || 0;
+    
+    if (r2 === 0 && i2 === 0) {
+        document.getElementById('complexResult').innerHTML = '<p style="color: red;">Cannot divide by zero</p>';
+        return;
+    }
+    
+    // (a + bi)/(c + di) = [(ac + bd) + (bc - ad)i] / (c² + d²)
+    const denominator = r2 * r2 + i2 * i2;
+    const realResult = (r1 * r2 + i1 * i2) / denominator;
+    const imagResult = (i1 * r2 - r1 * i2) / denominator;
+    
+    document.getElementById('complexResult').innerHTML = `
+        <h3>Division Result</h3>
+        <p>(${r1} + ${i1}i) ÷ (${r2} + ${i2}i)</p>
+        <p class="highlight">${realResult.toFixed(4)} + ${imagResult.toFixed(4)}i</p>
+    `;
+}
+
