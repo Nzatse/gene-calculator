@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Function Calculator</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/shared.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" data-tab="scientific">🔬 Scientific</button>
+            <button class="tab-btn" data-tab="financial">💰 Financial</button>
+            <button class="tab-btn" data-tab="graphing">📊 Graphing</button>
+            <button class="tab-btn" data-tab="programmable">⚙️ Programmable</button>
+            <button class="tab-btn" data-tab="printing">🖨️ Printing</button>
+            <button class="tab-btn" data-tab="converter">🔄 Converter</button>
+            <button class="tab-btn" data-tab="statistics">📈 Statistics</button>
+            <button class="tab-btn" data-tab="base">💻 Base</button>
+            <button class="tab-btn" data-tab="matrix">🔢 Matrix</button>
+            <button class="tab-btn" data-tab="datetime">📅 Date/Time</button>
+            <button class="tab-btn" data-tab="geometry">📐 Geometry</button>
+            <button class="tab-btn" data-tab="health">💪 Health</button>
+            <button class="tab-btn" data-tab="taxtip">💵 Tax & Tip</button>
+            <button class="tab-btn" data-tab="scinotation">🔬 Sci Notation</button>
+            <button class="tab-btn" data-tab="complex">🌀 Complex</button>
+        </div>
+
+        <!-- Calculator Container - Dynamically loaded content goes here -->
+        <div id="calculator-container">
+            <div class="loading">Loading calculator...</div>
+        </div>
+    </div>
+
+    <!-- Load as ES6 Module -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
