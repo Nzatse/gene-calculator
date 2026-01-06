@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Gene Calculator Mobile</title>
+    <link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="mobile-header">
+            <div class="header-content">
+                <button id="menu-btn" class="icon-btn">☰</button>
+                <button id="back-btn" class="icon-btn back-btn hidden">←</button>
+                <h1 id="current-calculator-title">Gene Calculator</h1>
+                <div style="width: 48px;"></div>
+            </div>
+        </header>
+
+        <!-- Sliding Calculator Menu -->
+        <nav id="calculator-menu" class="calculator-menu">
+            <div class="menu-header">
+                <div class="menu-header-content">
+                    <h2>Calculators</h2>
+                    <button id="close-menu-btn" class="icon-btn">✕</button>
+                </div>
+            </div>
+            <ul class="calculator-list">
+                <li><button data-calc="scientific" class="calc-menu-item active">
+                    <span class="calc-icon">🔬</span>
+                    <span class="calc-name">Scientific</span>
+                </button></li>
+                <li><button data-calc="financial" class="calc-menu-item">
+                    <span class="calc-icon">💰</span>
+                    <span class="calc-name">Financial</span>
+                </button></li>
+                <li><button data-calc="graphing" class="calc-menu-item">
+                    <span class="calc-icon">📊</span>
+                    <span class="calc-name">Graphing</span>
+                </button></li>
+                <li><button data-calc="programmable" class="calc-menu-item">
+                    <span class="calc-icon">⚡</span>
+                    <span class="calc-name">Programmable</span>
+                </button></li>
+                <li><button data-calc="printing" class="calc-menu-item">
+                    <span class="calc-icon">🖨️</span>
+                    <span class="calc-name">Printing</span>
+                </button></li>
+                <li><button data-calc="converter" class="calc-menu-item">
+                    <span class="calc-icon">🔄</span>
+                    <span class="calc-name">Converter</span>
+                </button></li>
+                <li><button data-calc="statistics" class="calc-menu-item">
+                    <span class="calc-icon">📈</span>
+                    <span class="calc-name">Statistics</span>
+                </button></li>
+                <li><button data-calc="base" class="calc-menu-item">
+                    <span class="calc-icon">1️⃣</span>
+                    <span class="calc-name">Base Converter</span>
+                </button></li>
+                <li><button data-calc="matrix" class="calc-menu-item">
+                    <span class="calc-icon">🔢</span>
+                    <span class="calc-name">Matrix</span>
+                </button></li>
+                <li><button data-calc="datetime" class="calc-menu-item">
+                    <span class="calc-icon">📅</span>
+                    <span class="calc-name">Date & Time</span>
+                </button></li>
+                <li><button data-calc="geometry" class="calc-menu-item">
+                    <span class="calc-icon">📐</span>
+                    <span class="calc-name">Geometry</span>
+                </button></li>
+                <li><button data-calc="health" class="calc-menu-item">
+                    <span class="calc-icon">❤️</span>
+                    <span class="calc-name">Health</span>
+                </button></li>
+                <li><button data-calc="taxtip" class="calc-menu-item">
+                    <span class="calc-icon">🧾</span>
+                    <span class="calc-name">Tax & Tip</span>
+                </button></li>
+                <li><button data-calc="scinotation" class="calc-menu-item">
+                    <span class="calc-icon">🔬</span>
+                    <span class="calc-name">Sci Notation</span>
+                </button></li>
+                <li><button data-calc="complex" class="calc-menu-item">
+                    <span class="calc-icon">ℂ</span>
+                    <span class="calc-name">Complex</span>
+                </button></li>
+            </ul>
+        </nav>
+
+        <!-- Overlay for menu -->
+        <div id="menu-overlay" class="menu-overlay"></div>
+
+        <!-- Main Calculator Container -->
+        <main id="calculator-container" class="calculator-container">
+            <!-- Calculator modules load here -->
+        </main>
+    </div>
+
+    <script type="module" src="js/mobile-app.js"></script>
+</body>
+</html>

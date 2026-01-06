@@ -1,0 +1,25 @@
+{
+  "name": "gene-calculator-mobile",
+  "version": "1.0.0",
+  "description": "Gene Calculator Mobile App - iOS and Android",
+  "main": "index.js",
+  "scripts": {
+    "build": "./build.sh",
+    "sync": "npm run build && npx cap sync",
+    "sync:ios": "npm run build && npx cap sync ios",
+    "sync:android": "npm run build && npx cap sync android",
+    "open:ios": "npx cap open ios",
+    "open:android": "npx cap open android",
+    "dev": "python3 -m http.server 8001"
+  },
+  "keywords": ["calculator", "mobile", "ios", "android"],
+  "author": "Gene Calculator Team",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/cli": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/ios": "^8.0.0"
+  }
+}

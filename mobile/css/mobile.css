@@ -1,0 +1,403 @@
+/**
+ * Gene Calculator Mobile Styles
+ * Touch-optimized, mobile-first design
+ */
+
+/* Reset and Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    /* Modern, Vivid Color Scheme */
+    --primary-color: #6366F1; /* Vivid Indigo */
+    --primary-dark: #4F46E5;
+    --primary-light: #A5B4FC;
+    --accent-color: #EC4899; /* Vivid Pink */
+    --accent-secondary: #10B981; /* Vivid Green */
+    --bg-color: #0F172A; /* Dark slate */
+    --bg-gradient: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    --surface-color: #1E293B;
+    --surface-hover: #334155;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --border-color: #334155;
+    --shadow: 0 4px 12px rgba(0,0,0,0.3);
+    --shadow-heavy: 0 8px 24px rgba(0,0,0,0.4);
+    --header-height: 64px;
+    --menu-width: 280px;
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --glow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: pan-y;
+    min-height: 100vh;
+}
+
+/* Header */
+.mobile-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding-top: env(safe-area-inset-top);
+    box-shadow: var(--shadow-heavy);
+    z-index: 100;
+}
+
+.mobile-header::before {
+    content: '';
+    display: block;
+    height: env(safe-area-inset-top);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+    padding: 0 8px;
+}
+
+.mobile-header h1 {
+    font-size: 20px;
+    font-weight: 500;
+    flex: 1;
+    text-align: center;
+}
+
+.icon-btn {
+    width: 48px;
+    height: 48px;
+    border: none;
+    background: none;
+    color: inherit;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.icon-btn:active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Sliding Menu */
+.calculator-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--menu-width);
+    background: var(--surface-color);
+    transform: translateX(-100%);
+    transition: transform var(--transition);
+    z-index: 200;
+    box-shadow: var(--shadow-heavy);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-top: env(safe-area-inset-top);
+}
+
+.calculator-menu.open {
+    transform: translateX(0);
+}
+
+.menu-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding-top: env(safe-area-inset-top);
+}
+
+.menu-header::before {
+    content: '';
+    display: block;
+    height: env(safe-area-inset-top);
+}
+
+.menu-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+    padding: 0 16px;
+}
+
+.menu-header h2 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.calculator-list {
+    list-style: none;
+    padding: 8px 0;
+}
+
+.calc-menu-item {
+    width: 100%;
+    padding: 16px 20px;
+    border: none;
+    background: none;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-align: left;
+}
+
+.calc-menu-item:active {
+    background: var(--surface-hover);
+    transform: scale(0.98);
+}
+
+.calc-menu-item.active {
+    background: rgba(99, 102, 241, 0.15);
+    border-left: 4px solid var(--primary-color);
+    box-shadow: var(--glow);
+}
+
+.calc-icon {
+    font-size: 28px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calc-name {
+    font-size: 16px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Menu Overlay */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition), visibility var(--transition);
+    z-index: 150;
+}
+
+.menu-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Main Container */
+.calculator-container {
+    margin-top: calc(var(--header-height) + env(safe-area-inset-top));
+    min-height: calc(100vh - var(--header-height) - env(safe-area-inset-top));
+    padding: 20px 16px;
+}
+
+/* Loading State */
+.loading {
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 18px;
+    color: var(--text-secondary);
+}
+
+.loading::after {
+    content: '...';
+    animation: ellipsis 1.5s infinite;
+}
+
+@keyframes ellipsis {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+}
+
+/* Error Message */
+.error-message {
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.error-message h3 {
+    color: var(--accent-color);
+    margin-bottom: 12px;
+}
+
+.error-message p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.error-message button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: var(--glow);
+}
+
+/* Welcome Screen */
+.welcome-screen {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.welcome-screen h1 {
+    font-size: 36px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+}
+
+.welcome-screen p {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.calculator-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.calculator-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: var(--shadow);
+}
+
+.calculator-card:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.calculator-card .calc-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 4px 8px rgba(99, 102, 241, 0.3));
+}
+
+.calculator-card .calc-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.3px;
+}
+
+.calculator-card .calc-description {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.4;
+}
+
+.calculator-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--glow), var(--shadow);
+}
+
+/* Touch Optimizations */
+button, input, select, textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 44px; /* iOS touch target size */
+}
+
+/* Safe Area Support (iPhone notch, etc.) */
+@supports (padding: env(safe-area-inset-top)) {
+    .mobile-header {
+        padding-top: env(safe-area-inset-top);
+        height: calc(var(--header-height) + env(safe-area-inset-top));
+    }
+    
+    .calculator-container {
+        margin-top: calc(var(--header-height) + env(safe-area-inset-top));
+        padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    }
+    
+    .calculator-menu {
+        padding-top: env(safe-area-inset-top);
+    }
+}
+
+/* Import shared calculator styles */
+@import '../../css/shared.css';
+
+/* Mobile-specific overrides for calculator modules */
+.calculator-container button {
+    min-height: 48px;
+    font-size: 16px;
+    padding: 12px 16px;
+}
+
+.calculator-container input,
+.calculator-container select,
+.calculator-container textarea {
+    min-height: 48px;
+    font-size: 16px;
+    padding: 12px;
+}
+
+/* Landscape adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+    .mobile-header {
+        --header-height: 48px;
+    }
+    
+    .calculator-container {
+        padding: 12px;
+    }
+}
+
+/* Tablet adjustments */
+@media (min-width: 768px) {
+    :root {
+        --menu-width: 320px;
+    }
+    
+    .calculator-container {
+        max-width: 768px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

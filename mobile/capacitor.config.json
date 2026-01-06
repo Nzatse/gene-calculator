@@ -1,0 +1,8 @@
+{
+  "appId": "com.genecalc.mobile",
+  "appName": "Gene Calculator",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}

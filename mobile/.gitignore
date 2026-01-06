@@ -1,0 +1,38 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build output
+www/
+
+# iOS
+ios/App/App/public/
+ios/App/Pods/
+ios/App/Podfile.lock
+ios/App/*.xcworkspace
+DerivedData/
+*.xcuserdata
+*.xcuserdatad
+
+# Android
+android/app/src/main/assets/public/
+android/.gradle/
+android/build/
+android/app/build/
+*.apk
+*.aab
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Capacitor
+.capacitor/
